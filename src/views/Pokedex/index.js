@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import {
   Window,
@@ -8,6 +8,8 @@ import {
   Tab,
   Button,
 } from "react95";
+
+import { BASE_URL, GENERATIONS } from "../../constants";
 
 import PokemonTable from "./PokemonTable";
 import { TabBody, Checkbox, Fieldset } from "react95/dist/prod";
@@ -19,18 +21,34 @@ export default function Pokedex() {
   const [selectedGeneration, setSelectedGeneration] = useState(1);
   const [isOwned, setIsOwned] = useState(false);
 
-  const tabs = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
   var handleTabChange = (tab) => setSelectedGeneration(tab);
   var handleOwnerChange = () => setIsOwned(!isOwned);
-
-  // TODO on componentdidmount get pokemons
 
   const [pokemons, setPokemons] = useContext(PokemonContext);
   const [selectedPokemons, setSelectedPokemon] = useContext(SelectionContext);
   const [windowManagement, setWindowManagement] = useContext(WindowContext);
 
   const [inspectedPokemon, setInspectedPokemon] = useState({});
+
+  useEffect(() => {
+    let didCancel = false;
+
+    console.log("pokedex component loaded...");
+    async function getPokedex() {
+      const response = await fetch(BASE_URL + "/pokedex");
+      const data = await response.json();
+      setPokemons(data);
+      if (!didCancel) {
+        console.log(data);
+      }
+    }
+
+    getPokedex();
+
+    return () => {
+      console.log("pokedex component unmounted...");
+    };
+  }, []);
 
   return (
     <div>
@@ -48,9 +66,9 @@ export default function Pokedex() {
           </Fieldset>
           <br />
           <Tabs value={selectedGeneration} onChange={handleTabChange}>
-            {tabs.map((tab) => (
-              <Tab value={tab} key={tab}>
-                Gen. {tab}
+            {GENERATIONS.map((gen) => (
+              <Tab value={gen} key={gen}>
+                Gen. {gen}
               </Tab>
             ))}
           </Tabs>
@@ -60,7 +78,8 @@ export default function Pokedex() {
                 <div style={{ float: "left", paddingRight: "50px" }}>
                   <PokemonTable
                     pokemons={pokemons.filter(
-                      (pokemon) => pokemon.generation === selectedGeneration
+                      (pokemon) =>
+                        pokemon.generation === selectedGeneration.toString()
                     )}
                   />
                 </div>
@@ -83,7 +102,7 @@ export default function Pokedex() {
           </Fieldset>
         </WindowContent>
       </Window>
-      {windowManagement.showPokemonDetailsView && <p>p</p>}}
+      {windowManagement.showPokemonDetailsView && <p>p</p>}
     </div>
   );
 }

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Fieldset } from "react95";
 import EmojiProperty from "../../components/EmojiProperty.js";
 import TypeIcon from "../../components/TypeIcon";
+
+import { useParams } from "react-router-dom";
 
 export default function PokemonDetails() {
   var pokemon = {
@@ -17,10 +19,14 @@ export default function PokemonDetails() {
     no_gos: ["Slimy Pokemons", "Arrogant legendary Pokemons"],
   };
 
+  let { id } = useParams();
+
   return (
     <Fieldset label="Details">
       <div style={containerStyle} id={"detailsContainer"}>
-        <img style={imageStyle} src={pokemon.url} alt="example" />
+        <div>{id}</div>
+        <div>pokemon.name</div>
+        {/* <img style={imageStyle} src={pokemon.url} alt="example" />
         <p style={centeredText}>{pokemon.name}</p>
         <div style={typesStyleCentered}>
           {pokemon.types.map((type) => (
@@ -75,7 +81,7 @@ export default function PokemonDetails() {
               ))}
             </div>
           }
-        />
+        /> */}
       </div>
     </Fieldset>
   );

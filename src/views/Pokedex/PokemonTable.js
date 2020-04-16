@@ -32,35 +32,38 @@ export default function PokemonTable({ pokemons }) {
   return (
     <Table>
       <React.Fragment>
-        {/* <div style={{ maxHeight: "calc(60vh - 100px)", overflowY: "scroll" }}> */}
-        <TableHead>
-          <TableRow head>
-            <TableHeadCell>ID</TableHeadCell>
-            <TableHeadCell>Image</TableHeadCell>
+        <div style={{ maxHeight: "300px", overflowY: "scroll" }}>
+          <TableHead>
+            <TableRow head>
+              <TableHeadCell>Id</TableHeadCell>
+              <TableHeadCell>Image</TableHeadCell>
 
-            <TableHeadCell>Name</TableHeadCell>
-            <TableHeadCell>Types</TableHeadCell>
-            <TableHeadCell>Attr.</TableHeadCell>
-            <TableHeadCell>Fert.</TableHeadCell>
-            <TableHeadCell>Fit.</TableHeadCell>
-            <TableHeadCell>Preferred Types</TableHeadCell>
-            <TableHeadCell>NoGo Types</TableHeadCell>
+              <TableHeadCell>Name</TableHeadCell>
+              <TableHeadCell>Types</TableHeadCell>
+              <TableHeadCell>Attr.</TableHeadCell>
+              <TableHeadCell>Fert.</TableHeadCell>
+              <TableHeadCell>Fit.</TableHeadCell>
+              <TableHeadCell>Preferred Types</TableHeadCell>
+              <TableHeadCell>NoGo Types</TableHeadCell>
 
-            <TableHeadCell>Actions</TableHeadCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {pokemons.map((pokemon) => (
-            <TableRow key={pokemon.id}>
-              <TableDataCell style={{ textAlign: "center" }}>
-                {pokemon.id}
-              </TableDataCell>
-              <TableDataCell style={{ textAlign: "center" }}>
+              <TableHeadCell>Actions</TableHeadCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {pokemons.map((pokemon) => (
+              <TableRow key={pokemon.id.counter}>
+                <TableDataCell style={{ textAlign: "center" }}>
+                  {pokemon.pokeDexId}
+                </TableDataCell>
+
+                {/* <TableDataCell style={{ textAlign: "center" }}>
                 <img style={imageStyle} src={pokemon.url} alt="example" />
-              </TableDataCell>
-              <TableDataCell style={{ textAlign: "center" }}>
-                {pokemon.name}
-              </TableDataCell>
+              </TableDataCell> */}
+
+                <TableDataCell style={{ textAlign: "center" }}>
+                  {pokemon.name}
+                </TableDataCell>
+                {/* 
               <TableDataCell style={{ textAlign: "center" }}>
                 <div style={typesStyleCentered}>
                   {pokemon.types.map((type) => (
@@ -72,12 +75,15 @@ export default function PokemonTable({ pokemons }) {
               <TableDataCell style={{ textAlign: "center" }}>
                 {pokemon.attractiveness * 100}%
               </TableDataCell>
+
               <TableDataCell style={{ textAlign: "center" }}>
                 {pokemon.fertility * 100}%
               </TableDataCell>
+
               <TableDataCell style={{ textAlign: "center" }}>
                 {pokemon.fitness * 100}%
               </TableDataCell>
+
               <TableDataCell style={{ textAlign: "center" }}>
                 <div style={typesStyleCentered}>
                   {pokemon.no_go_types.map((type) => (
@@ -85,13 +91,15 @@ export default function PokemonTable({ pokemons }) {
                   ))}
                 </div>
               </TableDataCell>
+
               <TableDataCell style={{ textAlign: "center" }}>
                 <div style={typesStyleCentered}>
                   {pokemon.preferred_types.map((type) => (
                     <TypeIcon type={type} small key={type} />
                   ))}
                 </div>
-              </TableDataCell>
+              </TableDataCell> 
+
               <TableDataCell style={{ textAlign: "center" }}>
                 <Button
                   variant="flat"
@@ -118,10 +126,11 @@ export default function PokemonTable({ pokemons }) {
                   <p>$</p>
                 </Button>
               </TableDataCell>
-            </TableRow>
-          ))}
-        </TableBody>
-        {/* </div> */}
+              */}
+              </TableRow>
+            ))}
+          </TableBody>
+        </div>
       </React.Fragment>
     </Table>
   );

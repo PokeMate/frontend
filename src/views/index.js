@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Home from "./Home";
 import Pokedex from "./Pokedex";
@@ -9,6 +9,7 @@ import Mate from "./Mate";
 import Profile from "./Profile";
 import Incubator from "./Incubator";
 import ApplicationBar from "./ApplicationBar";
+import Details from "./Details";
 
 export default function Views(props) {
   return (
@@ -34,6 +35,9 @@ export default function Views(props) {
             </Route>
             <Route path="/profile">
               <Profile />
+            </Route>
+            <Route path="/details/:id">
+              <Details id={1} />
             </Route>
           </Switch>
         </div>
