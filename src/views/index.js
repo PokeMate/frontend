@@ -6,7 +6,6 @@ import Home from "./Home";
 import Pokedex from "./Pokedex";
 import About from "./About";
 import Mate from "./Mate";
-import Login from "./Login";
 import Profile from "./Profile";
 import Incubator from "./Incubator";
 import ApplicationBar from "./ApplicationBar";
@@ -44,12 +43,12 @@ export default function Views(props) {
 }
 
 const appBarStyle = {
-  padding: "40px",
+  zIndex: 100000,
 };
 
 const windowStyle = {
-  width: "calc(100vw - 10px)",
-  height: "calc(100vh - 25px)",
+  width: "calc(100vw - 12px)",
+  height: "calc(100vh - 12px)",
   background: "teal",
 };
 
@@ -58,4 +57,5 @@ const desktopStyle = {
   left: "50%",
   top: "50%",
   transform: "translate(-50%, -50%)",
+  zIndex: 1,
 };

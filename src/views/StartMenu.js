@@ -44,7 +44,7 @@ export default function Menu() {
             <ListItem>
               <span role="img" aria-label="egg">
                 🥚
-              </span>{" "}
+              </span>
               Incubator
             </ListItem>
           </Link>
@@ -52,7 +52,7 @@ export default function Menu() {
             <ListItem>
               <span role="img" aria-label="fire">
                 🔥
-              </span>{" "}
+              </span>
               Mate
             </ListItem>
           </Link>
@@ -70,7 +70,7 @@ export default function Menu() {
           <ListItem disabled>
             <span role="img" aria-label="back">
               🔙
-            </span>{" "}
+            </span>
             Logout
           </ListItem>
         </List>
