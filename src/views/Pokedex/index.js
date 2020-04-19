@@ -1,34 +1,31 @@
 import React, { useState, useContext, useEffect } from "react";
 
-import {
-  Window,
-  WindowHeader,
-  WindowContent,
-  Tabs,
-  Tab,
-  Button,
-} from "react95";
+import { BASE_URL } from "../../constants";
 
-import { BASE_URL, GENERATIONS } from "../../constants";
+import PokemonCard from "../../components/PokemonCard";
 
-import PokemonTable from "./PokemonTable";
-import { TabBody, Checkbox, Fieldset } from "react95/dist/prod";
 import { PokemonContext } from "../../context/PokemonContext";
 import { SelectionContext } from "../../context/SelectionContext";
-import { WindowContext } from "../../context/WindowContext";
+import { InspectionContext } from "../../context/InspectionContext";
+import { Grid, CircularProgress } from "@material-ui/core";
+import PokedexFilers from "./PokedexFilers";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    padding: theme.spacing(2),
+  },
+}));
 
 export default function Pokedex() {
-  const [selectedGeneration, setSelectedGeneration] = useState(1);
-  const [isOwned, setIsOwned] = useState(false);
+  const classes = useStyles();
 
-  var handleTabChange = (tab) => setSelectedGeneration(tab);
-  var handleOwnerChange = () => setIsOwned(!isOwned);
-
+  const [isLoading, setIsLoading] = useState(true);
   const [pokemons, setPokemons] = useContext(PokemonContext);
   const [selectedPokemons, setSelectedPokemon] = useContext(SelectionContext);
-  const [windowManagement, setWindowManagement] = useContext(WindowContext);
 
-  const [inspectedPokemon, setInspectedPokemon] = useState({});
+  const [inspectedPokemon, setInspectedPokemon] = useContext(InspectionContext);
 
   useEffect(() => {
     let didCancel = false;
@@ -38,6 +35,7 @@ export default function Pokedex() {
       const response = await fetch(BASE_URL + "/pokedex");
       const data = await response.json();
       setPokemons(data);
+      setIsLoading(false);
       if (!didCancel) {
         console.log(data);
       }
@@ -48,69 +46,25 @@ export default function Pokedex() {
     return () => {
       console.log("pokedex component unmounted...");
     };
-  }, []);
+  }, [setPokemons]);
 
-  return (
-    <div>
-      <Window>
-        <WindowHeader>PokéDex</WindowHeader>
-        <WindowContent>
-          <Fieldset label="Filter">
-            <Checkbox
-              checked={isOwned}
-              onChange={handleOwnerChange}
-              value="owned"
-              label="Only show my captured Pokemons"
-              name="owned"
-            />
-          </Fieldset>
-          <br />
-          <Tabs value={selectedGeneration} onChange={handleTabChange}>
-            {GENERATIONS.map((gen) => (
-              <Tab value={gen} key={gen}>
-                Gen. {gen}
-              </Tab>
-            ))}
-          </Tabs>
-          <TabBody>
-            <React.Fragment>
-              <div style={windowStlye}>
-                <div style={{ float: "left", paddingRight: "50px" }}>
-                  <PokemonTable
-                    pokemons={pokemons.filter(
-                      (pokemon) =>
-                        pokemon.generation === selectedGeneration.toString()
-                    )}
-                  />
-                </div>
-              </div>
-            </React.Fragment>
-          </TabBody>
-          <br />
+  if (isLoading || pokemons === null) {
+    return <CircularProgress />;
+  } else {
+    return (
+      <div className={classes.root}>
+        <Grid container alignItems="stretch" spacing={2} justify="space-evenly">
+          <Grid item xs={12}>
+            <PokedexFilers />
+          </Grid>
 
-          <Fieldset label="Selected">
-            {selectedPokemons.map((pokemon) => (
-              <p>{pokemon.name}</p>
-            ))}
-            <br />
-            <Button>
-              <span role="img" aria-label="fire">
-                🔥
-              </span>
-              Mate
-            </Button>
-          </Fieldset>
-        </WindowContent>
-      </Window>
-      {windowManagement.showPokemonDetailsView && <p>p</p>}
-    </div>
-  );
+          {pokemons.slice(1, 100).map((pokemon) => (
+            <Grid item xs={6} sm={4} md={3} lg={2}>
+              <PokemonCard pokemon={pokemon} key={pokemon.id.counter} />
+            </Grid>
+          ))}
+        </Grid>
+      </div>
+    );
+  }
 }
-
-const windowStlye = {
-  maxHeight: "calc(80vh)",
-  minHeight: "calc(40vh)",
-  maxWidth: "calc(00vw)",
-  minWidth: "1000px",
-  display: "inline-block",
-};

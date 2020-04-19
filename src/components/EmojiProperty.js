@@ -4,7 +4,7 @@ export default function EmojiProperty({ emoji, property, value }) {
   return (
     <div>
       <p style={leftText}>
-        <span role="img" aria-label="house">
+        <span role="img" aria-label="emoji">
           {emoji}
         </span>
         <span> {property}</span>

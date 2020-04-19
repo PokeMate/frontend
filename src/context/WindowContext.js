@@ -3,9 +3,7 @@ import React, { createContext, useState } from "react";
 export const WindowContext = createContext();
 
 export function WindowProvider({ children }) {
-  const [windowManagement, setWindowManagement] = useState({
-    showPokemonDetailsView: false,
-  });
+  const [windowManagement, setWindowManagement] = useState(false);
 
   return (
     <WindowContext.Provider value={[windowManagement, setWindowManagement]}>

@@ -18,7 +18,7 @@ import rockSvg from "../img/types/rock.svg";
 import steelSvg from "../img/types/steel.svg";
 import waterSvg from "../img/types/water.svg";
 
-export default function Bug({ type, small, medium, large }) {
+export default function TypeIcon({ type, small, medium, large }) {
   var IconSize = IconSizeSmall;
   if (medium) {
     IconSize = IconSizeMedium;
@@ -225,9 +225,9 @@ const WaterStyle = {
 
 const IconStyle = {
   borderRadius: "100px",
-  display: "inline-block",
-  marginRight: "10px",
-  marginLeft: "10px",
+  // display: "inline-block",
+  // marginRight: "10px",
+  // marginLeft: "10px",
 };
 
 const IconSizeSmall = {
