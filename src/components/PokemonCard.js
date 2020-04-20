@@ -1,14 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TypeChip from "./TypeChip";
-import {
-  Grid,
-  Typography,
-  Button,
-  CardContent,
-  Card,
-  CardActions,
-} from "@material-ui/core";
+import { Grid, Typography, CardContent, Card } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 import { toPokedexId } from "../services/utils";

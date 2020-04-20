@@ -11,7 +11,6 @@ import {
   Grid,
   Chip,
   Avatar,
-  Switch,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { makeStyles } from "@material-ui/core/styles";

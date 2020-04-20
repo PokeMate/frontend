@@ -1,4 +1,3 @@
-import React from "react";
 import bugSvg from "../img/types/bug.svg";
 import darkSvg from "../img/types/dark.svg";
 import dragonSvg from "../img/types/dragon.svg";
