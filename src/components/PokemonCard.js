@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PokemonCard({ pokemon }) {
+export default function PokemonCard({ pokemon, addToSelection }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -53,8 +53,11 @@ export default function PokemonCard({ pokemon }) {
   };
 
   return (
-    <Card className={classes.card} onClick={() => handleClick(pokemon)}>
-      <CardContent className={classes.card}>
+    <Card className={classes.card}>
+      <CardContent
+        className={classes.card}
+        onClick={() => handleClick(pokemon)}
+      >
         <Typography
           className={classes.title}
           color="textSecondary"
@@ -83,8 +86,8 @@ export default function PokemonCard({ pokemon }) {
         </Grid>
       </CardContent>
 
-      <CardActions className={classes.cardActions}>
-        <Button size="small">
+      {/* <CardActions className={classes.cardActions}>
+        <Button size="small" onClick={() => addToSelection(pokemon)}>
           <span role="img" aria-label="fire">
             🔥
           </span>
@@ -97,7 +100,7 @@ export default function PokemonCard({ pokemon }) {
           </span>
           Catch
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }

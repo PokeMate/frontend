@@ -1,26 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { BASE_URL } from "../../constants";
 import { useParams, useHistory } from "react-router-dom";
-import TypeChip from "../../components/TypeChip";
-import MatingPreference from "../../components/MatingPreference";
-import ProgressProperty from "../../components/ProgressProperty";
-import { NavigateNext, NavigateBefore } from "@material-ui/icons";
 
-import {
-  CircularProgress,
-  Grid,
-  Typography,
-  Button,
-  CardContent,
-  Card,
-} from "@material-ui/core";
+import { NavigateNext, NavigateBefore } from "@material-ui/icons";
+import DetailsCard from "../../components/DetailsCard";
+import { CircularProgress, Grid, Button, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { toPokedexId } from "../../services/utils";
-import exampleImg from "./114.png";
+import { SelectionContext } from "../../context/SelectionContext";
+import MuiAlert from "@material-ui/lab/Alert";
 
 export default function PokemonDetails() {
   const classes = useStyles();
   const history = useHistory();
+
+  const [selection, setSelection] = useContext(SelectionContext);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [openSnackbarError, setOpenSnackbarError] = React.useState(false);
+
+  const addToSelection = (pokemon) => {
+    if (selection.pokemon1 === undefined) {
+      setSelection({ ...selection, pokemon1: pokemon });
+      setOpenSnackbar(true);
+    } else if (selection.pokemon2 === undefined) {
+      setSelection({ ...selection, pokemon2: pokemon });
+      setOpenSnackbar(true);
+    } else {
+      setOpenSnackbarError(true);
+    }
+  };
 
   const [isLoading, setIsLoading] = useState(true);
   const [pokemon, setPokemon] = useState();
@@ -37,15 +45,12 @@ export default function PokemonDetails() {
         console.log(data);
       }
     }
-
     getPokedex();
-
     return () => {
       console.log("pokedex component unmounted...");
     };
   }, [id]);
 
-  const handleClick = () => {};
   const handleNavigation = (pokedexId) => {
     history.push("/pokedex/" + pokedexId.toString());
   };
@@ -91,118 +96,9 @@ export default function PokemonDetails() {
         </Grid>
         <Grid container justify="center">
           <Grid item xs={12} sm={8} md={6}>
-            <Card className={classes.card} onClick={() => handleClick(pokemon)}>
-              <CardContent className={classes.card}>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Grid item>
-                    <Typography variant="h6" color="textSecondary">
-                      {toPokedexId(pokemon.pokeDexId)}
-                    </Typography>
-                    <Typography variant="h5" className={classes.nameTitle}>
-                      {pokemon.name}
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Grid
-                      container
-                      spacing={2}
-                      direction="row"
-                      // justify="center"
-                      // alignItems="center"
-                    >
-                      <Grid item>
-                        <TypeChip typeName={pokemon.type1} />
-                      </Grid>
-                      {pokemon.type2 !== "" && (
-                        <Grid item>
-                          <TypeChip typeName={pokemon.type2} />
-                        </Grid>
-                      )}
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <br />
-                <img
-                  className={classes.image}
-                  src={exampleImg}
-                  alt={pokemon.name}
-                />
-                <Grid
-                  container
-                  spacing={2}
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <Grid item xs={12}>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-around"
-                      alignItems="center"
-                    >
-                      <Grid item xs={3}>
-                        <ProgressProperty
-                          progress={90}
-                          emoji="🔥"
-                          property="Attractivity"
-                          color="#ff6700"
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <ProgressProperty
-                          progress={40}
-                          emoji="🌿"
-                          property="Fertility"
-                          color="#519600"
-                        />
-                      </Grid>
-                      <Grid item xs={3}>
-                        <ProgressProperty
-                          progress={80}
-                          emoji="🏋️‍♀️"
-                          property="Fitness"
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-
-                  <Grid item>
-                    <MatingPreference
-                      emoji="🧲"
-                      property="Fettish"
-                      index="1"
-                      sentence="Likes slimy Pokemons."
-                    />
-                  </Grid>
-
-                  <Grid item>
-                    <MatingPreference
-                      emoji="🧲"
-                      property="Fettish"
-                      index="2"
-                      sentence="Prefers Pokemons with BMI < 24."
-                    />
-                  </Grid>
-                  <Grid item>
-                    <MatingPreference
-                      emoji="❌"
-                      property="Nogo"
-                      index="1"
-                      sentence="Dislikes arrogant legendary Pokemons"
-                    />
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
+            <DetailsCard pokemon={pokemon} />
           </Grid>
         </Grid>
-
         <Grid container justify="center" className={classes.buttons}>
           <Grid item xs={12} sm={8} md={6}>
             <Grid
@@ -212,30 +108,45 @@ export default function PokemonDetails() {
               alignItems="center"
               spacing={2}
             >
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <Button
                   variant="contained"
                   size="large"
                   fullWidth
-                  color="primary"
+                  color="secondary"
+                  onClick={() => addToSelection(pokemon)}
                 >
-                  <span role="img" aria-label="fire">
+                  <span role="img" aria-label="heart">
                     ❤️
                   </span>
-                  Mate
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button variant="contained" size="large" fullWidth>
-                  <span role="img" aria-label="fire">
-                    🕸
+                  Send on a date
+                  <span role="img" aria-label="heart">
+                    ❤️
                   </span>
-                  Catch
                 </Button>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
+
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={3000}
+          onClose={() => setOpenSnackbar(false)}
+        >
+          <MuiAlert severity="success" elevation={6} variant="filled">
+            Sucessfully added to the date selection.
+          </MuiAlert>
+        </Snackbar>
+        <Snackbar
+          open={openSnackbarError}
+          autoHideDuration={3000}
+          onClose={() => setOpenSnackbar(false)}
+        >
+          <MuiAlert severity="error" elevation={6} variant="filled">
+            Already two pokemons selected for a date.
+          </MuiAlert>
+        </Snackbar>
       </div>
     );
   }
