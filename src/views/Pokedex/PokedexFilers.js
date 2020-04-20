@@ -40,12 +40,7 @@ export default function PokedexFilers({ filterPokemons }) {
     Array(GENERATIONS.length).fill(true)
   );
 
-  const [owned, setOwned] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState(TYPES);
-
-  const handleOwned = () => {
-    setOwned(!owned);
-  };
 
   const handleGenerationFilter = (gen) => {
     var arr = selectedGenerations.map((value, index) => {
@@ -65,7 +60,7 @@ export default function PokedexFilers({ filterPokemons }) {
   };
 
   const handleFilterPokemons = () => {
-    filterPokemons(owned, selectedGenerations, selectedTypes);
+    filterPokemons(selectedGenerations, selectedTypes);
   };
 
   return (
@@ -79,18 +74,6 @@ export default function PokedexFilers({ filterPokemons }) {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <Grid container>
-          <Grid item xs={12} className={classes.filter}>
-            <FormLabel>Owner</FormLabel>
-            <FormGroup name="owner" aria-label="owner" value={"owner"} row>
-              <FormControlLabel
-                control={
-                  <Switch checked={owned} onChange={handleOwned} name="owner" />
-                }
-                label="only show my captured Pokemons"
-              />
-            </FormGroup>
-          </Grid>
-
           <Grid item xs={12} className={classes.filter}>
             <FormLabel>Generation</FormLabel>
             <FormGroup

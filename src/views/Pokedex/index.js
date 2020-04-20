@@ -6,7 +6,9 @@ import PokemonCard from "../../components/PokemonCard";
 
 import { PokemonContext } from "../../context/PokemonContext";
 import { SelectionContext } from "../../context/SelectionContext";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress, Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
+
 import PokedexFilers from "./PokedexFilers";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -15,7 +17,9 @@ export default function Pokedex() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [pokemons, setPokemons] = useContext(PokemonContext);
-  const [selectedPokemons, setSelectedPokemon] = useContext(SelectionContext);
+  const [selection, setSelection] = useContext(SelectionContext);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [openSnackbarError, setOpenSnackbarError] = React.useState(false);
 
   useEffect(() => {
     let didCancel = false;
@@ -58,6 +62,18 @@ export default function Pokedex() {
     setPokemons(newPokemons);
   };
 
+  const addToSelection = (pokemon) => {
+    if (selection.pokemon1 === undefined) {
+      setSelection({ ...selection, pokemon1: pokemon });
+      setOpenSnackbar(true);
+    } else if (selection.pokemon2 === undefined) {
+      setSelection({ ...selection, pokemon2: pokemon });
+      setOpenSnackbar(true);
+    } else {
+      setOpenSnackbarError(true);
+    }
+  };
+
   if (isLoading || pokemons === null) {
     return <CircularProgress />;
   } else {
@@ -74,10 +90,30 @@ export default function Pokedex() {
                 pokemon={pokemon}
                 key={pokemon.id.counter}
                 filterPokemons={filterPokemons}
+                addToSelection={addToSelection}
               />
             </Grid>
           ))}
         </Grid>
+
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={3000}
+          onClose={() => setOpenSnackbar(false)}
+        >
+          <MuiAlert severity="success" elevation={6} variant="filled">
+            Sucessfully added to the date selection.
+          </MuiAlert>
+        </Snackbar>
+        <Snackbar
+          open={openSnackbarError}
+          autoHideDuration={3000}
+          onClose={() => setOpenSnackbar(false)}
+        >
+          <MuiAlert severity="error" elevation={6} variant="filled">
+            Already two pokemons selected for a date.
+          </MuiAlert>
+        </Snackbar>
       </div>
     );
   }
