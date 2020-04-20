@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PokedexFilers() {
+export default function PokedexFilers({ filterPokemons }) {
   const classes = useStyles();
   const [selectedGenerations, setSelectedGenerations] = useState(
     Array(GENERATIONS.length).fill(true)
@@ -61,6 +61,11 @@ export default function PokedexFilers() {
     } else {
       setSelectedTypes([...selectedTypes, type]);
     }
+    handleFilterPokemons();
+  };
+
+  const handleFilterPokemons = () => {
+    filterPokemons(owned, selectedGenerations, selectedTypes);
   };
 
   return (

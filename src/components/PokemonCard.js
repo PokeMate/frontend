@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TypeIcon from "./TypeIcon";
+import TypeChip from "./TypeChip";
 import {
   Grid,
   Typography,
@@ -73,11 +73,13 @@ export default function PokemonCard({ pokemon }) {
           alignItems="center"
         >
           <Grid item>
-            <TypeIcon type={pokemon.type1.toLowerCase()} small />
+            <TypeChip typeName={pokemon.type1} size="small" />
           </Grid>
-          <Grid item>
-            <TypeIcon type={pokemon.type2.toLowerCase()} small />
-          </Grid>
+          {pokemon.type2 !== "" && (
+            <Grid item>
+              <TypeChip typeName={pokemon.type2} size="small" />
+            </Grid>
+          )}
         </Grid>
       </CardContent>
 

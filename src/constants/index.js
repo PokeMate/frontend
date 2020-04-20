@@ -24,92 +24,92 @@ export const TYPES = [
   {
     name: "bug",
     color: "#92BC2C",
-    icon: bugSvg
+    icon: bugSvg,
   },
   {
     name: "dark",
     color: "#595761",
-    icon:darkSvg
+    icon: darkSvg,
   },
   {
     name: "dragon",
     color: "#0C69C8",
-    icon:dragonSvg
+    icon: dragonSvg,
   },
   {
     name: "electric",
     color: "#F2D94E",
-    icon: electricSvg
+    icon: electricSvg,
   },
   {
     name: "fire",
     color: "#FBA54C",
-    icon: fireSvg
+    icon: fireSvg,
   },
   {
     name: "fairy",
     color: "#EE90E6",
-    icon: fairySvg
+    icon: fairySvg,
   },
   {
     name: "fighting",
     color: "#D3425F",
-    icon: fightingSvg
+    icon: fightingSvg,
   },
   {
     name: "flying",
     color: "#A1BBEC",
-    icon: flyingSvg
+    icon: flyingSvg,
   },
   {
     name: "ghost",
     color: "#5F6DBC",
-    icon: ghostSvg
+    icon: ghostSvg,
   },
   {
     name: "grass",
     color: "#5FBD58",
-    icon: grassSvg
+    icon: grassSvg,
   },
   {
     name: "ground",
     color: "#DA7C4D",
-    icon: groundSvg
+    icon: groundSvg,
   },
   {
     name: "ice",
     color: "#75D0C1",
-    icon: iceSvg
+    icon: iceSvg,
   },
   {
     name: "normal",
     color: "#A0A29F",
-    icon: normalSvg
+    icon: normalSvg,
   },
 
   {
     name: "poison",
     color: "#B763CF",
-    icon: poisonSvg
+    icon: poisonSvg,
   },
   {
-    name: "pychic",
+    name: "psychic",
     color: "#FA8581",
-    icon: psychicSvg
+    icon: psychicSvg,
   },
   {
     name: "rock",
     color: "#C9BB8A",
-    icon: rockSvg
+    icon: rockSvg,
   },
   {
     name: "steel",
     color: "#5695A3",
-    icon: steelSvg
+    icon: steelSvg,
   },
   {
     name: "water",
     color: "#539DDF",
-    icon: waterSvg
+    icon: waterSvg,
   },
 ];

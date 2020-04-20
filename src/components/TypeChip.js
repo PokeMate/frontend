@@ -2,7 +2,7 @@ import React from "react";
 import { Chip, Avatar } from "@material-ui/core";
 import { getType } from "../services/utils";
 
-export default function TypeChip({ typeName }) {
+export default function TypeChip({ typeName, size }) {
   typeName = typeName.toLowerCase();
   return (
     <Chip
@@ -11,6 +11,7 @@ export default function TypeChip({ typeName }) {
         backgroundColor: getType(typeName).color,
       }}
       avatar={<Avatar src={getType(typeName).icon} />}
+      size={size}
     />
   );
 }
