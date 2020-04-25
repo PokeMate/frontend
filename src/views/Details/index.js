@@ -63,9 +63,10 @@ export default function PokemonDetails() {
     return (
       <Grid container spacing={2} className={classes.root}>
 
+
         {/*navigation buttons*/}
         <Grid item container justify="center">
-          <Grid item xs={12} sm={8} md={6} spacing={2}>
+          <Grid item xs={12} spacing={2}>
             <Grid
               container
               direction="row"
@@ -117,16 +118,15 @@ export default function PokemonDetails() {
           </Grid>
         </Grid>
 
-        {/*pokemon card*/}
-        <Grid item container justify="center">
-          <Grid item xs={12} sm={8} md={6}>
+        <Grid item container justify="center" spacing={2}>
+
+          {/*pokemon card*/}
+          <Grid item xs={12} md={6}>
             <DetailsCard pokemon={pokemon}/>
           </Grid>
-        </Grid>
 
-        {/*rating*/}
-        <Grid item container justify="center">
-          <Grid item xs={12} sm={8} md={6}>
+          {/*rating*/}
+          <Grid item xs={12} md={6}>
             <Rating pokemon={pokemon}/>
           </Grid>
         </Grid>

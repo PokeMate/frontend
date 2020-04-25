@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { Grid, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useContext} from "react";
+import {Grid, Button} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 import DetailsCard from "../../components/DetailsCard";
-import { useHistory } from "react-router-dom";
-import { SelectionContext } from "../../context/SelectionContext";
+import {useHistory} from "react-router-dom";
+import {SelectionContext} from "../../context/SelectionContext";
 
 export default function Mate() {
   const [selection, setSelection] = useContext(SelectionContext);
@@ -19,7 +19,7 @@ export default function Mate() {
               <Button
                 fullWidth
                 onClick={() =>
-                  setSelection({ ...selection, pokemon1: undefined })
+                  setSelection({...selection, pokemon1: undefined})
                 }
                 color="primary"
               >
@@ -39,7 +39,7 @@ export default function Mate() {
           </Grid>
           <Grid item xs={12}>
             {selection.pokemon1 !== undefined && (
-              <DetailsCard pokemon={selection.pokemon1} />
+              <DetailsCard pokemon={selection.pokemon1}/>
             )}
           </Grid>
         </Grid>
@@ -51,7 +51,7 @@ export default function Mate() {
               <Button
                 fullWidth
                 onClick={() =>
-                  setSelection({ ...selection, pokemon2: undefined })
+                  setSelection({...selection, pokemon2: undefined})
                 }
                 color="primary"
               >
@@ -71,14 +71,10 @@ export default function Mate() {
           </Grid>
           <Grid item xs={12}>
             {selection.pokemon2 !== undefined && (
-              <DetailsCard pokemon={selection.pokemon2} />
+              <DetailsCard pokemon={selection.pokemon2}/>
             )}
           </Grid>
         </Grid>
-      </Grid>
-
-      <Grid item xs={12}>
-        Summary
       </Grid>
       <Grid item xs={12}>
         <Button
@@ -89,7 +85,13 @@ export default function Mate() {
             selection.pokemon1 === undefined || selection.pokemon2 === undefined
           }
         >
+          <span role="img" aria-label="heart">
+            ❤️
+          </span>
           Send on a date
+          <span role="img" aria-label="heart">
+            ❤️
+          </span>
         </Button>
       </Grid>
     </Grid>
