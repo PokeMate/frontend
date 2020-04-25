@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
   ExpansionPanelSummary,
   ExpansionPanelDetails,
@@ -13,9 +13,9 @@ import {
   Avatar,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 
-import { GENERATIONS, TYPES } from "../../constants";
+import {GENERATIONS, TYPES} from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,20 +33,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PokedexFilers({ filterPokemons }) {
+export default function PokedexFilers({selectedTypes, setSelectedTypes, selectedGenerations, setSelectedGenerations}) {
   const classes = useStyles();
-  const [selectedGenerations, setSelectedGenerations] = useState(
-    Array(GENERATIONS.length).fill(true)
-  );
-
-  const [selectedTypes, setSelectedTypes] = useState(TYPES);
 
   const handleGenerationFilter = (gen) => {
-    var arr = selectedGenerations.map((value, index) => {
-      if (index + 1 !== gen) return value;
-      else return !value;
-    });
-    setSelectedGenerations(arr);
+    if (selectedGenerations.includes(gen)) {
+      setSelectedGenerations(selectedGenerations.filter((g) => g !== gen));
+    } else {
+      setSelectedGenerations([...selectedGenerations, gen]);
+    }
   };
 
   const selectType = (type) => {
@@ -55,17 +50,12 @@ export default function PokedexFilers({ filterPokemons }) {
     } else {
       setSelectedTypes([...selectedTypes, type]);
     }
-    handleFilterPokemons();
-  };
-
-  const handleFilterPokemons = () => {
-    filterPokemons(selectedGenerations, selectedTypes);
   };
 
   return (
     <ExpansionPanel defaultExpanded>
       <ExpansionPanelSummary
-        expandIcon={<ExpandMoreIcon />}
+        expandIcon={<ExpandMoreIcon/>}
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
@@ -86,7 +76,7 @@ export default function PokedexFilers({ filterPokemons }) {
                   key={gen}
                   control={
                     <Checkbox
-                      checked={selectedGenerations[gen - 1]}
+                      checked={selectedGenerations.includes(gen)}
                       onClick={() => handleGenerationFilter(gen)}
                       name={gen.toString()}
                     />
@@ -110,7 +100,7 @@ export default function PokedexFilers({ filterPokemons }) {
                       ? type.color
                       : "#f2f2f2",
                   }}
-                  avatar={<Avatar src={type.icon} />}
+                  avatar={<Avatar src={type.icon}/>}
                 />
               ))}
             </FormGroup>
