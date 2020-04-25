@@ -1,9 +1,9 @@
 import React, {useState, useContext, useEffect} from "react";
 
-import {BASE_URL, GENERATIONS, TYPES} from "../../constants";
+import {BASE_URL, TYPES} from "../../constants";
 import PokemonCard from "../../components/PokemonCard";
 import {PokemonContext} from "../../context/PokemonContext";
-import {Grid, CircularProgress, Snackbar} from "@material-ui/core";
+import {Grid, CircularProgress} from "@material-ui/core";
 import PokedexFilers from "./PokedexFilers";
 import {makeStyles} from "@material-ui/core/styles";
 import {capitalize} from "../../services/utils";
@@ -29,12 +29,9 @@ export default function Pokedex() {
 
       var params = {
         generations: selectedGenerations, types: selectedTypes.map((t) => capitalize(t.name))
-      } // or:
+      }
       url.search = new URLSearchParams(params).toString();
-      console.log(selectedGenerations)
-      console.log(selectedTypes)
 
-      console.log(url)
 
       const response = await fetch(url);
       const data = await response.json();
@@ -51,26 +48,6 @@ export default function Pokedex() {
       console.log("pokedex component unmounted...");
     };
   }, [setPokemons, selectedGenerations, selectedTypes]);
-
-  const filterPokemons = (owned, selectedGenerations, selectedTypes) => {
-    var generations = selectedGenerations.filter((gen, index) => {
-      if (gen) {
-        return index + 1;
-      }
-    });
-    var types = selectedTypes.map((type) => type.name);
-    console.log(owned);
-    console.log(generations);
-    console.log(types);
-
-    var newPokemons = pokemons.filter(
-      (pokemon) =>
-        types.includes(pokemon.type1.toLowerCase()) &&
-        generations.includes(pokemon.generation)
-    );
-
-    setPokemons(newPokemons);
-  };
 
   var content;
 

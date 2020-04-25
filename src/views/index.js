@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 import Home from "./Home";
 import Pokedex from "./Pokedex";
@@ -15,26 +15,29 @@ import Header from "../components/Header";
 export default function Views(props) {
   return (
     <Router>
-      <Header />
+      <Header/>
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={Home}/>
         <Route path="/pokedex/:id">
-          <Details />
+          <Details/>
         </Route>
         <Route path="/pokedex">
-          <Pokedex />
+          <Pokedex/>
+        </Route>
+        <Route path="/incubator/:id">
+          <Incubator/>
         </Route>
         <Route path="/incubator">
-          <Incubator />
+          <Incubator/>
         </Route>
         <Route path="/mate">
-          <Mate />
+          <Mate/>
         </Route>
         <Route path="/about">
-          <About />
+          <About/>
         </Route>
         <Route path="/profile">
-          <Profile />
+          <Profile/>
         </Route>
       </Switch>
     </Router>
