@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   }
 }));
-const Rating = ({name, image, rating}) => {
+const Rating = ({generalRating, postRating}) => {
   const [nameRating, setNameRating] = useState(0)
   const [imageRating, setImageRating] = useState(0)
   const [combinationRating, setCombinationRating] = useState(0)
@@ -28,19 +28,19 @@ const Rating = ({name, image, rating}) => {
             <Grid item xs={8}>
               <Typography variant="subtitle2" display="block">Name </Typography>
               <StarRatings
-                rating={1}
+                rating={generalRating.name}
                 starDimension="25px"
                 starSpacing="5px"
               />
               <Typography variant="subtitle2" display="block">Image</Typography>
               <StarRatings
-                rating={4.403}
+                rating={generalRating.image}
                 starDimension="25px"
                 starSpacing="5px"
               />
               <Typography variant="subtitle2" display="block">Combination</Typography>
               <StarRatings
-                rating={2.8}
+                rating={generalRating.rating}
                 starDimension="25px"
                 starSpacing="5px"
               />
@@ -82,7 +82,8 @@ const Rating = ({name, image, rating}) => {
               <br/>
               <br/>
 
-              <Button variant="contained" color="primary">Post Rating</Button>
+              <Button variant="contained" color="primary"
+                      onClick={() => postRating(nameRating, imageRating, combinationRating)}>Post Rating</Button>
             </Grid>
 
           </Grid>

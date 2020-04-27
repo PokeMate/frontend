@@ -54,7 +54,7 @@ export default function Pokedex() {
   if (isLoading || pokemons === null) {
     content = <CircularProgress/>
   } else {
-    content = pokemons.slice(0, 100).map((pokemon) => (
+    content = pokemons.slice(0, 1000).map((pokemon) => (
       <Grid item xs={6} sm={4} md={3} lg={2}>
         <PokemonCard
           pokemon={pokemon}
