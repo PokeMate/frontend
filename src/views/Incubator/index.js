@@ -1,9 +1,82 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useEffect, useState} from "react";
+import {CircularProgress, Grid} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import {BASE_URL} from "../../constants";
+import DateTable from "../../components/DateTable";
+import DateFilters from "./DateFilters"
 
 export default function Incubator() {
   const classes = useStyles();
+
+  const [dates, setDates] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  useEffect(() => {
+    let didCancel = false;
+    setIsLoading(true)
+
+    async function getDates() {
+      var url = new URL(BASE_URL + "/dates/")
+
+      // var params = {
+      //   generations: selectedGenerations, types: selectedTypes.map((t) => capitalize(t.name))
+      // }
+      // url.search = new URLSearchParams(params).toString();
+
+      const response = await fetch(url);
+      const data = await response.json();
+      setDates([
+        {
+          "dateId": 4,
+          "successfull": true,
+          "parent1Id": 43,
+          "parent2Id": 122,
+          "babyId": 373,
+          "dateStart": 1587835702,
+          "dateEnd": 1587835710,
+        }, {
+          "dateId": 2,
+          "successfull": false,
+          "finished": true,
+          "parent1Id": 43,
+          "parent2Id": 122,
+          "babyId": null,
+          "dateStart": 1585930153,
+          "dateEnd": null,
+        },
+        {
+          "dateId": 5,
+          "successfull": false,
+          "finished": true,
+          "parent1Id": 43,
+          "parent2Id": 122,
+          "babyId": null,
+          "dateStart": 1585930153,
+          "dateEnd": 1585930156,
+        },
+      ]);
+      setIsLoading(false);
+      if (!didCancel) {
+        console.log(data);
+      }
+    }
+
+    getDates();
+
+    return () => {
+      console.log("incubator view unmounted...");
+    };
+  }, [setDates]);
+
+
+  var content;
+  if (isLoading) {
+    content = <CircularProgress/>
+  } else {
+    content = <DateTable dates={dates}/>
+  }
+
   return (
     <Grid
       container
@@ -12,15 +85,18 @@ export default function Incubator() {
       spacing={2}
       justify="space-evenly"
     >
-      <Grid item>dateFilters</Grid>
-      <Grid item>dates</Grid>
+      <Grid item xs={12}>
+        <DateFilters/>
+      </Grid>
+      <Grid item xs={12}>
+        {content}
+      </Grid>
     </Grid>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
     padding: theme.spacing(2),
   },
 }));
