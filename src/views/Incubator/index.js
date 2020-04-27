@@ -26,36 +26,10 @@ export default function Incubator() {
 
       const response = await fetch(url);
       const data = await response.json();
-      setDates([
-        {
-          "dateId": 4,
-          "successfull": true,
-          "parent1Id": 43,
-          "parent2Id": 122,
-          "babyId": 373,
-          "dateStart": 1587835702,
-          "dateEnd": 1587835710,
-        }, {
-          "dateId": 2,
-          "successfull": false,
-          "finished": true,
-          "parent1Id": 43,
-          "parent2Id": 122,
-          "babyId": null,
-          "dateStart": 1585930153,
-          "dateEnd": null,
-        },
-        {
-          "dateId": 5,
-          "successfull": false,
-          "finished": true,
-          "parent1Id": 43,
-          "parent2Id": 122,
-          "babyId": null,
-          "dateStart": 1585930153,
-          "dateEnd": 1585930156,
-        },
-      ]);
+      setDates(data);
+
+      console.log(data)
+
       setIsLoading(false);
       if (!didCancel) {
         console.log(data);

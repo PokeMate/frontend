@@ -8,7 +8,8 @@ import {
   TableBody,
   Paper,
   Button,
-  Typography
+  Typography,
+  Avatar
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
@@ -18,8 +19,11 @@ import moment from "moment";
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
+    minWidth: "650px",
   },
+  avatar: {
+    marginRight: "10px"
+  }
 });
 
 const isFinished = ({dateEnd}) => {
@@ -35,6 +39,19 @@ const DateTable = ({dates}) => {
   const classes = useStyles();
   const history = useHistory();
 
+  const BabyIdButton = ({date}) => {
+    if (wasSuccessfull(date)) {
+      return <Button onClick={() => history.push("/pokedex/" + date.pokeBaby.pokeDexId.toString())}>
+        <Avatar alt="Remy Sharp" src="./114.png" className={classes.avatar}/>
+        {toPokedexId(date.pokeBaby.pokeDexId)} {date.pokeBaby.name}
+      </Button>
+    } else if (date.finished) {
+      return <Typography> <span role="img" aria-label="clock emoji">⏳ ongoing</span></Typography>
+    } else {
+      return <Typography><span role="img" aria-label="clock emoji">💔 No Match</span></Typography>
+    }
+  }
+
 
   return (
     <TableContainer component={Paper}>
@@ -42,33 +59,28 @@ const DateTable = ({dates}) => {
         <TableHead>
           <TableRow>
             <TableCell align="left">Baby Pokemon</TableCell>
-            <TableCell align="right">Date Start</TableCell>
-            <TableCell align="right">Date End</TableCell>
-            <TableCell align="right">Parent 1</TableCell>
-            <TableCell align="right">Parent 2</TableCell>
+            <TableCell align="left">Date Start</TableCell>
+            <TableCell align="left">Parent 1</TableCell>
+            <TableCell align="left">Parent 2</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {dates.map((date) => (
-            <TableRow key={date.dateId}>
+            <TableRow key={date.id.counter}>
               <TableCell align="left">
                 <BabyIdButton date={date} history={history}/>
               </TableCell>
-              <TableCell align="right">{moment.unix(date.dateStart).fromNow()}</TableCell>
-              <TableCell align="right">
-                {isFinished(date) ?
-                  moment.unix(date.dateEnd).fromNow() :
-                  <Typography> <span role="img" aria-label="clock emoji">⏳ ongoing</span></Typography>
-                }
-              </TableCell>
-              <TableCell align="right">
-                <Button onClick={() => history.push("/pokedex/" + date.parent1Id.toString())}>
-                  {toPokedexId(date.parent1Id)}
+              <TableCell align="left">{moment.unix(date.id.timestamp).fromNow()}</TableCell>
+              <TableCell align="left">
+                <Button onClick={() => history.push("/pokedex/" + date.pokemon1.pokeDexId.toString())}>
+                  <Avatar alt="Remy Sharp" src="./114.png" className={classes.avatar}/>
+                  {toPokedexId(date.pokemon1.pokeDexId)} {date.pokemon1.name}
                 </Button>
               </TableCell>
-              <TableCell align="right">
-                <Button onClick={() => history.push("/pokedex/" + date.parent2Id.toString())}>
-                  {toPokedexId(date.parent2Id)}
+              <TableCell align="left">
+                <Button onClick={() => history.push("/pokedex/" + date.pokemon2.pokeDexId.toString())}>
+                  <Avatar alt="Remy Sharp" src="./114.png" className={classes.avatar}/>
+                  {toPokedexId(date.pokemon2.pokeDexId)} {date.pokemon2.name}
                 </Button>
               </TableCell>
 
@@ -80,16 +92,5 @@ const DateTable = ({dates}) => {
   );
 };
 
-const BabyIdButton = ({date, history}) => {
-  if (wasSuccessfull(date)) {
-    return <Button onClick={() => history.push("/pokedex/" + date.babyId.toString())}>
-      {toPokedexId(date.babyId)}
-    </Button>
-  } else if (!isFinished(date)) {
-    return <Typography> <span role="img" aria-label="clock emoji">⏳ ongoing</span></Typography>
-  } else {
-    return <Typography><span role="img" aria-label="clock emoji">💔 No Match</span></Typography>
-  }
-}
 
 export default DateTable;
