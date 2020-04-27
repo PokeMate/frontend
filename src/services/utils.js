@@ -19,3 +19,8 @@ export function getType(typeName) {
     return { name: "undefined", color: "red", icon: "undefined" };
   }
 }
+
+export function capitalize(s) {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}

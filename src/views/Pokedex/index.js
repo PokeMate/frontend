@@ -1,32 +1,42 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, {useState, useContext, useEffect} from "react";
 
-import { BASE_URL } from "../../constants";
-
+import {BASE_URL, GENERATIONS, TYPES} from "../../constants";
 import PokemonCard from "../../components/PokemonCard";
-
-import { PokemonContext } from "../../context/PokemonContext";
-import { SelectionContext } from "../../context/SelectionContext";
-import { Grid, CircularProgress, Snackbar } from "@material-ui/core";
-import MuiAlert from "@material-ui/lab/Alert";
-
+import {PokemonContext} from "../../context/PokemonContext";
+import {Grid, CircularProgress, Snackbar} from "@material-ui/core";
 import PokedexFilers from "./PokedexFilers";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
+import {capitalize} from "../../services/utils";
 
 export default function Pokedex() {
   const classes = useStyles();
 
-  const [isLoading, setIsLoading] = useState(true);
   const [pokemons, setPokemons] = useContext(PokemonContext);
-  const [selection, setSelection] = useContext(SelectionContext);
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const [openSnackbarError, setOpenSnackbarError] = React.useState(false);
+
+  // filters
+  const [selectedGenerations, setSelectedGenerations] = useState([1]);
+  const [selectedTypes, setSelectedTypes] = useState(TYPES);
+
+  // ui
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let didCancel = false;
+    setIsLoading(true)
 
-    console.log("pokedex component loaded...");
     async function getPokedex() {
-      const response = await fetch(BASE_URL + "/pokedex");
+      var url = new URL(BASE_URL + "/pokedex/")
+
+      var params = {
+        generations: selectedGenerations, types: selectedTypes.map((t) => capitalize(t.name))
+      } // or:
+      url.search = new URLSearchParams(params).toString();
+      console.log(selectedGenerations)
+      console.log(selectedTypes)
+
+      console.log(url)
+
+      const response = await fetch(url);
       const data = await response.json();
       setPokemons(data);
       setIsLoading(false);
@@ -40,7 +50,7 @@ export default function Pokedex() {
     return () => {
       console.log("pokedex component unmounted...");
     };
-  }, [setPokemons]);
+  }, [setPokemons, selectedGenerations, selectedTypes]);
 
   const filterPokemons = (owned, selectedGenerations, selectedTypes) => {
     var generations = selectedGenerations.filter((gen, index) => {
@@ -62,61 +72,35 @@ export default function Pokedex() {
     setPokemons(newPokemons);
   };
 
-  const addToSelection = (pokemon) => {
-    if (selection.pokemon1 === undefined) {
-      setSelection({ ...selection, pokemon1: pokemon });
-      setOpenSnackbar(true);
-    } else if (selection.pokemon2 === undefined) {
-      setSelection({ ...selection, pokemon2: pokemon });
-      setOpenSnackbar(true);
-    } else {
-      setOpenSnackbarError(true);
-    }
-  };
+  var content;
 
   if (isLoading || pokemons === null) {
-    return <CircularProgress />;
+    content = <CircularProgress/>
   } else {
-    return (
-      <div className={classes.root}>
-        <Grid container alignItems="stretch" spacing={2} justify="space-evenly">
-          <Grid item xs={12}>
-            <PokedexFilers filterPokemons={filterPokemons} />
-          </Grid>
-
-          {pokemons.slice(1, 100).map((pokemon) => (
-            <Grid item xs={6} sm={4} md={3} lg={2}>
-              <PokemonCard
-                pokemon={pokemon}
-                key={pokemon.id.counter}
-                filterPokemons={filterPokemons}
-                addToSelection={addToSelection}
-              />
-            </Grid>
-          ))}
-        </Grid>
-
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={3000}
-          onClose={() => setOpenSnackbar(false)}
-        >
-          <MuiAlert severity="success" elevation={6} variant="filled">
-            Sucessfully added to the date selection.
-          </MuiAlert>
-        </Snackbar>
-        <Snackbar
-          open={openSnackbarError}
-          autoHideDuration={3000}
-          onClose={() => setOpenSnackbar(false)}
-        >
-          <MuiAlert severity="error" elevation={6} variant="filled">
-            Already two pokemons selected for a date.
-          </MuiAlert>
-        </Snackbar>
-      </div>
-    );
+    content = pokemons.slice(0, 100).map((pokemon) => (
+      <Grid item xs={6} sm={4} md={3} lg={2}>
+        <PokemonCard
+          pokemon={pokemon}
+          key={pokemon.id.counter}
+        />
+      </Grid>
+    ))
   }
+
+
+  return (
+    <div className={classes.root}>
+      <Grid container alignItems="stretch" spacing={2} justify="space-evenly">
+        <Grid item xs={12}>
+          <PokedexFilers selectedTypes={selectedTypes}
+                         setSelectedTypes={setSelectedTypes}
+                         selectedGenerations={selectedGenerations}
+                         setSelectedGenerations={setSelectedGenerations}/>
+        </Grid>
+        {content}
+      </Grid>
+    </div>
+  );
 }
 
 const useStyles = makeStyles((theme) => ({

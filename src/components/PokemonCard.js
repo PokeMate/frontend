@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PokemonCard({ pokemon, addToSelection }) {
+export default function PokemonCard({ pokemon }) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -78,22 +78,6 @@ export default function PokemonCard({ pokemon, addToSelection }) {
           )}
         </Grid>
       </CardContent>
-
-      {/* <CardActions className={classes.cardActions}>
-        <Button size="small" onClick={() => addToSelection(pokemon)}>
-          <span role="img" aria-label="fire">
-            🔥
-          </span>
-          Mate
-        </Button>
-        <div className={classes.spacer}></div>
-        <Button size="small">
-          <span role="img" aria-label="fire">
-            🕸
-          </span>
-          Catch
-        </Button>
-      </CardActions> */}
     </Card>
   );
 }
