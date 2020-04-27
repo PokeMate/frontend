@@ -4,12 +4,33 @@ import {makeStyles} from "@material-ui/core/styles";
 import DetailsCard from "../../components/DetailsCard";
 import {useHistory} from "react-router-dom";
 import {SelectionContext} from "../../context/SelectionContext";
+import {BASE_URL} from "../../constants";
 
 export default function Mate() {
   const [selection, setSelection] = useContext(SelectionContext);
 
   const classes = useStyles();
   const history = useHistory();
+
+  const postDate = async () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        "pokeDexId1": selection.pokemon1.pokeDexId,
+        "pokeDexId2": selection.pokemon2.pokeDexId
+      })
+    };
+    const response = await fetch(BASE_URL + "/dates", requestOptions);
+    const data = await response.json();
+    history.push("/incubator")
+    setSelection({
+      pokemon1: undefined,
+      pokemon2: undefined,
+    })
+  }
+
+
   return (
     <Grid container className={classes.root} spacing={2}>
       <Grid item xs={12} md={6}>
@@ -84,6 +105,7 @@ export default function Mate() {
           disabled={
             selection.pokemon1 === undefined || selection.pokemon2 === undefined
           }
+          onClick={postDate}
         >
           <span role="img" aria-label="heart">
             ❤️
