@@ -64,7 +64,7 @@ export default function DetailsCard({pokemon}) {
             >
               <Grid item xs={3}>
                 <ProgressProperty
-                  progress={90}
+                  progress={Math.floor(pokemon.attractivity * 100)}
                   emoji="🔥"
                   property="Attractivity"
                   color="#ff6700"
@@ -72,14 +72,14 @@ export default function DetailsCard({pokemon}) {
               </Grid>
               <Grid item xs={3}>
                 <ProgressProperty
-                  progress={40}
+                  progress={Math.floor(pokemon.fertility * 100)}
                   emoji="🌿"
                   property="Fertility"
                   color="#519600"
                 />
               </Grid>
               <Grid item xs={3}>
-                <ProgressProperty progress={80} emoji="🏋️‍♀️" property="Fitness"/>
+                <ProgressProperty progress={Math.floor(pokemon.fitness * 100)} emoji="🏋️‍♀️" property="Fitness"/>
               </Grid>
             </Grid>
           </Grid>
