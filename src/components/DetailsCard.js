@@ -1,18 +1,18 @@
 import React from "react";
 import TypeChip from "./TypeChip";
 import ProgressProperty from "./ProgressProperty";
-import { Grid, Typography, CardContent, Card } from "@material-ui/core";
-import { toPokedexId } from "../services/utils";
-import { makeStyles } from "@material-ui/core/styles";
+import {Grid, Typography, CardContent, Card} from "@material-ui/core";
+import {toPokedexId} from "../services/utils";
+import {makeStyles} from "@material-ui/core/styles";
 import exampleImg from "./114.png";
 import MatingPreference from "./MatingPreference";
 
-export default function DetailsCard({ pokemon }) {
+export default function DetailsCard({pokemon}) {
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
-      <CardContent className={classes.card}>
+    <Card>
+      <CardContent>
         <Grid
           container
           direction="row"
@@ -36,18 +36,18 @@ export default function DetailsCard({ pokemon }) {
               // alignItems="center"
             >
               <Grid item>
-                <TypeChip typeName={pokemon.type1} />
+                <TypeChip typeName={pokemon.type1}/>
               </Grid>
               {pokemon.type2 !== "" && (
                 <Grid item>
-                  <TypeChip typeName={pokemon.type2} />
+                  <TypeChip typeName={pokemon.type2}/>
                 </Grid>
               )}
             </Grid>
           </Grid>
         </Grid>
-        <br />
-        <img className={classes.image} src={exampleImg} alt={pokemon.name} />
+        <br/>
+        <img className={classes.image} src={exampleImg} alt={pokemon.name}/>
         <Grid
           container
           spacing={2}
@@ -79,7 +79,7 @@ export default function DetailsCard({ pokemon }) {
                 />
               </Grid>
               <Grid item xs={3}>
-                <ProgressProperty progress={80} emoji="🏋️‍♀️" property="Fitness" />
+                <ProgressProperty progress={80} emoji="🏋️‍♀️" property="Fitness"/>
               </Grid>
             </Grid>
           </Grid>
@@ -116,22 +116,8 @@ export default function DetailsCard({ pokemon }) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: theme.spacing(2),
-  },
-  card: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  title: {
-    fontSize: 14,
-  },
   nameTitle: {
     fontSize: "vi",
-  },
-  spacer: {
-    flex: 1,
   },
   image: {
     display: "block",
@@ -139,9 +125,5 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "auto",
     width: "100%",
     maxWidth: "300px",
-  },
-  buttons: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-  },
+  }
 }));
