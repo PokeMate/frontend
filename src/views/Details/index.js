@@ -42,15 +42,17 @@ export default function PokemonDetails() {
   };
 
   const postRating = async (name, image, rating) => {
-    setIsLoading(true)
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({"name": name, "image": image, "rating": rating})
+      body: JSON.stringify({"name": name * 100, "image": image * 100, "rating": rating * 100})
     };
     const response = await fetch(BASE_URL + "/rating/" + id, requestOptions);
     const data = await response.json();
-    setIsLoading(false)
+
+    const responseRating = await fetch(BASE_URL + "/rating/" + id);
+    const dataRating = await responseRating.json();
+    setRating(dataRating);
 
     console.log(data)
   }
@@ -81,7 +83,7 @@ export default function PokemonDetails() {
     return () => {
       console.log("pokedex component unmounted...");
     };
-  }, [id, isLoading]);
+  }, [id]);
 
   const handleNavigation = (pokedexId) => {
     history.push("/pokedex/" + pokedexId.toString());
@@ -96,8 +98,8 @@ export default function PokemonDetails() {
 
 
         {/*navigation buttons*/}
-        <Grid item container justify="center">
-          <Grid item container xs={12} spacing={2}>
+        <Grid item container justify="center" spacing={2}>
+          <Grid item container xs={12}>
             <Grid
               container
               direction="row"

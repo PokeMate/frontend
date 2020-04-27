@@ -14,7 +14,6 @@ const Rating = ({generalRating, postRating}) => {
   const [imageRating, setImageRating] = useState(0)
   const [combinationRating, setCombinationRating] = useState(0)
 
-
   const classes = useStyles();
   return (
     <Card>
@@ -23,24 +22,24 @@ const Rating = ({generalRating, postRating}) => {
         <div>
           <Grid item container>
             <Grid item xs={4}>
-              <Typography variant="subtitle1" display="block"> Overall Rating (132)</Typography>
+              <Typography variant="subtitle1" display="block"> Overall Rating</Typography>
             </Grid>
             <Grid item xs={8}>
               <Typography variant="subtitle2" display="block">Name </Typography>
               <StarRatings
-                rating={generalRating.name}
+                rating={generalRating.name / 100}
                 starDimension="25px"
                 starSpacing="5px"
               />
               <Typography variant="subtitle2" display="block">Image</Typography>
               <StarRatings
-                rating={generalRating.image}
+                rating={generalRating.image / 100}
                 starDimension="25px"
                 starSpacing="5px"
               />
               <Typography variant="subtitle2" display="block">Combination</Typography>
               <StarRatings
-                rating={generalRating.rating}
+                rating={generalRating.rating / 100}
                 starDimension="25px"
                 starSpacing="5px"
               />
