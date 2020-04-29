@@ -4,11 +4,11 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const DateFilters = () => {
   const classes = useStyles();
-  
+
   return (
     <Grid container component={Paper} className={classes.root}>
       <Grid item>
-        Simon
+        Filters
       </Grid>
     </Grid>
   );
