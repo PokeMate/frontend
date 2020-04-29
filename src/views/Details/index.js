@@ -15,8 +15,19 @@ export default function PokemonDetails() {
   const classes = useStyles();
   const history = useHistory();
 
+  let {id} = useParams();
+
   const [selection, setSelection] = useContext(SelectionContext);
   const [openSnackbarError, setOpenSnackbarError] = React.useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [pokemon, setPokemon] = useState();
+  const [rating, setRating] = useState({
+    name: 0,
+    image: 0,
+    rating: 0
+  });
+
 
   const addToSelection = (pokemon) => {
     if (selection.pokemon1 === undefined) {
@@ -30,24 +41,45 @@ export default function PokemonDetails() {
     }
   };
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [pokemon, setPokemon] = useState();
-  let {id} = useParams();
+  const postRating = async (name, image, rating) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({"name": name * 100, "image": image * 100, "rating": rating * 100})
+    };
+    const response = await fetch(BASE_URL + "/rating/" + id, requestOptions);
+    const data = await response.json();
+
+    const responseRating = await fetch(BASE_URL + "/rating/" + id);
+    const dataRating = await responseRating.json();
+    setRating(dataRating);
+
+    console.log(data)
+  }
 
   useEffect(() => {
     let didCancel = false;
 
-    async function getPokedex() {
+    async function getPokemon() {
       const response = await fetch(BASE_URL + "/pokedex/" + id);
       const data = await response.json();
       setPokemon(data[0]);
-      setIsLoading(false);
       if (!didCancel) {
         console.log(data);
       }
+
+      const responseRating = await fetch(BASE_URL + "/rating/" + id);
+      const dataRating = await responseRating.json();
+      setRating(dataRating);
+
+      setIsLoading(false);
+
+      if (!didCancel) {
+        console.log(dataRating);
+      }
     }
 
-    getPokedex();
+    getPokemon();
     return () => {
       console.log("pokedex component unmounted...");
     };
@@ -57,6 +89,7 @@ export default function PokemonDetails() {
     history.push("/pokedex/" + pokedexId.toString());
   };
 
+
   if (isLoading || pokemon === null) {
     return <CircularProgress/>;
   } else {
@@ -65,8 +98,8 @@ export default function PokemonDetails() {
 
 
         {/*navigation buttons*/}
-        <Grid item container justify="center">
-          <Grid item xs={12} spacing={2}>
+        <Grid item container justify="center" spacing={2}>
+          <Grid item container xs={12}>
             <Grid
               container
               direction="row"
@@ -127,7 +160,7 @@ export default function PokemonDetails() {
 
           {/*rating*/}
           <Grid item xs={12} md={6}>
-            <Rating pokemon={pokemon}/>
+            <Rating generalRating={rating} postRating={postRating}/>
           </Grid>
         </Grid>
 
