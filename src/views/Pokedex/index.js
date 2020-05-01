@@ -14,7 +14,7 @@ export default function Pokedex() {
   const [pokemons, setPokemons] = useContext(PokemonContext);
 
   // filters
-  const [selectedGenerations, setSelectedGenerations] = useState([1]);
+  const [selectedGenerations, setSelectedGenerations] = useState(["1"]);
   const [selectedTypes, setSelectedTypes] = useState(TYPES);
 
   // ui
@@ -30,6 +30,7 @@ export default function Pokedex() {
       var params = {
         generations: selectedGenerations, types: selectedTypes.map((t) => capitalize(t.name))
       }
+      console.log(params)
       url.search = new URLSearchParams(params).toString();
 
 
