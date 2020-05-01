@@ -56,7 +56,7 @@ export default function Pokedex() {
     content = <CircularProgress/>
   } else {
     content = pokemons.slice(0, 1000).map((pokemon) => (
-      <Grid item xs={6} sm={4} md={3} lg={2}>
+      <Grid key={pokemon.id.counter} item xs={6} sm={4} md={3} lg={2}>
         <PokemonCard
           pokemon={pokemon}
           key={pokemon.id.counter}
