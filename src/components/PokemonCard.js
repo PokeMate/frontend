@@ -1,14 +1,14 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import TypeChip from "./TypeChip";
-import { Grid, Typography, CardContent, Card } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import {Grid, Typography, CardContent, Card} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
 
-import { toPokedexId } from "../services/utils";
+import {toPokedexId} from "../services/utils";
 
-import exampleImg from "./114.png";
+import {BASE_URL} from "../constants";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   card: {
     // height: "300px",
     display: "flex",
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PokemonCard({ pokemon }) {
+export default function PokemonCard({pokemon}) {
   const classes = useStyles();
   const history = useHistory();
 
@@ -59,8 +59,10 @@ export default function PokemonCard({ pokemon }) {
           {toPokedexId(pokemon.pokeDexId)}
         </Typography>
         <Typography className={classes.nameTitle}>{pokemon.name}</Typography>
-        <br />
-        <img className={classes.image} src={exampleImg} alt={pokemon.name} />
+        <br/>
+
+        <img className={classes.image} src={BASE_URL + "/image/" + pokemon.pokeDexId.toString()} alt={pokemon.name}/>
+        <br/>
         <Grid
           container
           spacing={2}
@@ -69,11 +71,11 @@ export default function PokemonCard({ pokemon }) {
           alignItems="center"
         >
           <Grid item>
-            <TypeChip typeName={pokemon.type1} size="small" />
+            <TypeChip typeName={pokemon.type1} size="small"/>
           </Grid>
           {pokemon.type2 !== "" && (
             <Grid item>
-              <TypeChip typeName={pokemon.type2} size="small" />
+              <TypeChip typeName={pokemon.type2} size="small"/>
             </Grid>
           )}
         </Grid>

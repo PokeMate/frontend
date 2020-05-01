@@ -13,6 +13,7 @@ export default function Mate() {
   const history = useHistory();
 
   const postDate = async () => {
+    console.log(selection)
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -21,8 +22,7 @@ export default function Mate() {
         "pokeDexId2": selection.pokemon2.pokeDexId
       })
     };
-    const response = await fetch(BASE_URL + "/dates", requestOptions);
-    const data = await response.json();
+    await fetch(BASE_URL + "/dates", requestOptions);
     history.push("/incubator")
     setSelection({
       pokemon1: undefined,
