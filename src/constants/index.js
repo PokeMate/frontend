@@ -18,7 +18,7 @@ import steelSvg from "../img/types/steel.svg";
 import waterSvg from "../img/types/water.svg";
 
 export const BASE_URL = "http://localhost:5100/v1";
-export const GENERATIONS = [1, 2, 3, 4, 5, 6, 7];
+export const GENERATIONS = ["1", "2", "3", "4", "5", "6", "X"];
 export const TYPES = [
   {
     name: "bug",

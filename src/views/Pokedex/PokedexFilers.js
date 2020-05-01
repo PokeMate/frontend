@@ -78,10 +78,10 @@ export default function PokedexFilers({selectedTypes, setSelectedTypes, selected
                     <Checkbox
                       checked={selectedGenerations.includes(gen)}
                       onClick={() => handleGenerationFilter(gen)}
-                      name={gen.toString()}
+                      name={gen}
                     />
                   }
-                  label={gen.toString()}
+                  label={gen}
                 />
               ))}
             </FormGroup>
