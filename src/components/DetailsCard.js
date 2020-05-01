@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import TypeChip from "./TypeChip";
 import ProgressProperty from "./ProgressProperty";
 import {Grid, Typography, CardContent, Card} from "@material-ui/core";
-import {capitalize, toPokedexId} from "../services/utils";
+import {toPokedexId} from "../services/utils";
 import {makeStyles} from "@material-ui/core/styles";
-import exampleImg from "./114.png";
 import MatingPreference from "./MatingPreference";
 import {BASE_URL} from "../constants";
 
@@ -49,6 +48,7 @@ export default function DetailsCard({pokemon}) {
         </Grid>
         <br/>
         <img className={classes.image} src={BASE_URL + "/image/" + pokemon.pokeDexId.toString()} alt={pokemon.name}/>
+        <br/>
         <Grid
           container
           spacing={2}
@@ -116,7 +116,7 @@ export default function DetailsCard({pokemon}) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   nameTitle: {
     fontSize: "vi",
   },

@@ -6,10 +6,9 @@ import {useHistory} from "react-router-dom";
 
 import {toPokedexId} from "../services/utils";
 
-import exampleImg from "./114.png";
 import {BASE_URL} from "../constants";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   card: {
     // height: "300px",
     display: "flex",

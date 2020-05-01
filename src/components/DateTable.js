@@ -15,6 +15,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router-dom";
 import {toPokedexId} from "../services/utils";
 import moment from "moment";
+import {BASE_URL} from "../constants";
 
 
 const useStyles = makeStyles({
@@ -25,10 +26,6 @@ const useStyles = makeStyles({
     marginRight: "10px"
   }
 });
-
-const isFinished = ({dateEnd}) => {
-  return dateEnd !== null;
-}
 
 const wasSuccessfull = ({babyId, endDate}) => {
   return endDate !== null && babyId !== null;
@@ -42,7 +39,8 @@ const DateTable = ({dates}) => {
   const BabyIdButton = ({date}) => {
     if (wasSuccessfull(date)) {
       return <Button onClick={() => history.push("/pokedex/" + date.pokeBaby.pokeDexId.toString())}>
-        <Avatar alt="Remy Sharp" src="./114.png" className={classes.avatar}/>
+        <Avatar alt="pokemon avatar" src={BASE_URL + "/image/" + date.pokeBaby.pokeDexId.toString()}
+                className={classes.avatar}/>
         {toPokedexId(date.pokeBaby.pokeDexId)} {date.pokeBaby.name}
       </Button>
     } else if (date.finished) {
@@ -66,25 +64,31 @@ const DateTable = ({dates}) => {
         </TableHead>
         <TableBody>
           {dates.map((date) => (
-            <TableRow key={date.id.counter}>
+
+
+            date.pokemon1 !== null && <TableRow key={date.id.counter}>
               <TableCell align="left">
                 <BabyIdButton date={date} history={history}/>
               </TableCell>
               <TableCell align="left">{moment.unix(date.id.timestamp).fromNow()}</TableCell>
               <TableCell align="left">
                 <Button onClick={() => history.push("/pokedex/" + date.pokemon1.pokeDexId.toString())}>
-                  <Avatar alt="Remy Sharp" src="./114.png" className={classes.avatar}/>
+                  <Avatar alt="pokemon avatar" src={BASE_URL + "/image/" + date.pokemon1.pokeDexId.toString()}
+                          className={classes.avatar}/>
                   {toPokedexId(date.pokemon1.pokeDexId)} {date.pokemon1.name}
                 </Button>
               </TableCell>
               <TableCell align="left">
                 <Button onClick={() => history.push("/pokedex/" + date.pokemon2.pokeDexId.toString())}>
-                  <Avatar alt="Remy Sharp" src="./114.png" className={classes.avatar}/>
+                  <Avatar alt="pokemon avatar" src={BASE_URL + "/image/" + date.pokemon2.pokeDexId.toString()}
+                          className={classes.avatar}/>
                   {toPokedexId(date.pokemon2.pokeDexId)} {date.pokemon2.name}
                 </Button>
               </TableCell>
 
             </TableRow>
+
+
           ))}
         </TableBody>
       </Table>
