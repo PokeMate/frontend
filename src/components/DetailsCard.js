@@ -114,46 +114,49 @@ export default function DetailsCard({pokemon}) {
           )}
 
           {/* Attracted Types */}
-          <Grid item xs={12}>
-            <MatingPreference
-              emoji="😍"
-              property="Attracted Types"
-              index="all"
-              childComponent={(
-                <Grid item container spacing={1} direction="row">
-                  {
-                    pokemon.attractedTypes.map((type) => (
-                      <Grid item key={type}>
-                        <TypeChip typeName={type}/>
-                      </Grid>
-                    ))
-                  }
-                </Grid>
-              )}
-            />
-          </Grid>
+          {
+            pokemon.attractedTypes !== null && pokemon.attractedTypes.length !== 0 && <Grid item xs={12}>
+              <MatingPreference
+                emoji="😍"
+                property="Attracted Types"
+                index="all"
+                childComponent={(
+                  <Grid item container spacing={1} direction="row">
+                    {
+                      pokemon.attractedTypes.map((type) => (
+                        <Grid item key={type}>
+                          <TypeChip typeName={type}/>
+                        </Grid>
+                      ))
+                    }
+                  </Grid>
+                )}
+              />
+            </Grid>
+          }
 
 
           {/* Nogo Types */}
-          <Grid item xs={12}>
-            <MatingPreference
-              emoji="🤮"
-              property="Nogo Types"
-              index="all"
-              childComponent={(
-                <Grid item container spacing={1} direction="row">
-                  {
-                    pokemon.nogoTypes.map((type) => (
-                      <Grid item key={type}>
-                        <TypeChip typeName={type}/>
-                      </Grid>
-                    ))
-                  }
-                </Grid>
-              )}
-            />
-          </Grid>
-
+          {
+            pokemon.nogoTypes !== null && pokemon.nogoTypes.length !== 0 && <Grid item xs={12}>
+              <MatingPreference
+                emoji="🤮"
+                property="Nogo Types"
+                index="all"
+                childComponent={(
+                  <Grid item container spacing={1} direction="row">
+                    {
+                      pokemon.nogoTypes.map((type) => (
+                        <Grid item key={type}>
+                          <TypeChip typeName={type}/>
+                        </Grid>
+                      ))
+                    }
+                  </Grid>
+                )}
+              />
+            </Grid>
+          }
         </Grid>
       </CardContent>
     </Card>
