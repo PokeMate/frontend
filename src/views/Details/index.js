@@ -138,11 +138,11 @@ export default function PokemonDetails() {
                   color="secondary"
                   onClick={() => addToSelection(pokemon)}
                 >
-                  <span role="img" aria-label="heart">
+                  <span role="img" aria-label="heart" className={classes.emoji}>
                     ❤️
                   </span>
-                  Send on a date
-                  <span role="img" aria-label="heart">
+                  select for a date
+                  <span role="img" aria-label="heart" className={classes.emoji}>
                     ❤️
                   </span>
                 </Button>
@@ -182,5 +182,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: theme.spacing(2),
+  },
+  emoji: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   }
 }));

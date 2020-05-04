@@ -1,7 +1,7 @@
 import React from "react";
 import TypeChip from "./TypeChip";
 import ProgressProperty from "./ProgressProperty";
-import {Grid, Typography, CardContent, Card} from "@material-ui/core";
+import {Grid, Typography, CardContent, Card, Divider} from "@material-ui/core";
 import {toPokedexId} from "../services/utils";
 import {makeStyles} from "@material-ui/core/styles";
 import MatingPreference from "./MatingPreference";
@@ -83,40 +83,87 @@ export default function DetailsCard({pokemon}) {
                 <ProgressProperty progress={Math.floor(pokemon.fitness * 100)} emoji="🏋️‍♀️" property="Fitness"/>
               </Grid>
             </Grid>
+            <br/>
+            <Divider/>
           </Grid>
 
-          <Grid item>
-            <MatingPreference
-              emoji="🧲"
-              property="Fettish"
-              index="1"
-              sentence="Likes slimy Pokemons."
-            />
-          </Grid>
+          {/* Fetishes */}
+          {pokemon.fetisches !== null && pokemon.fetisches.map((fetish, index) => (
+              <Grid item xs={12} key={index}>
+                <MatingPreference
+                  emoji={fetish.emoji}
+                  property="Fetish"
+                  index={(index + 1).toString()}
+                  childComponent={<Typography>{fetish.fetish}</Typography>}
+                />
+              </Grid>
+            )
+          )}
 
-          <Grid item>
-            <MatingPreference
-              emoji="🧲"
-              property="Fettish"
-              index="2"
-              sentence="Prefers Pokemons with BMI < 24."
-            />
-          </Grid>
-          <Grid item>
-            <MatingPreference
-              emoji="❌"
-              property="Nogo"
-              index="1"
-              sentence="Dislikes arrogant legendary Pokemons"
-            />
-          </Grid>
+          {/* Nogos */}
+          {pokemon.nogos !== null && pokemon.nogos.map((nogo, index) => (
+              <Grid item xs={12} key={index}>
+                <MatingPreference
+                  emoji="❌"
+                  property="Nogo"
+                  index={(index + 1).toString()}
+                  childComponent={<Typography>{nogo.nogo}</Typography>}
+                />
+              </Grid>
+            )
+          )}
+
+          {/* Attracted Types */}
+          {
+            pokemon.attractedTypes !== null && pokemon.attractedTypes.length !== 0 && <Grid item xs={12}>
+              <MatingPreference
+                emoji="😍"
+                property="Attracted Types"
+                index="all"
+                childComponent={(
+                  <Grid item container spacing={1} direction="row">
+                    {
+                      pokemon.attractedTypes.map((type) => (
+                        <Grid item key={type}>
+                          <TypeChip typeName={type}/>
+                        </Grid>
+                      ))
+                    }
+                  </Grid>
+                )}
+              />
+            </Grid>
+          }
+
+
+          {/* Nogo Types */}
+          {
+            pokemon.nogoTypes !== null && pokemon.nogoTypes.length !== 0 && <Grid item xs={12}>
+              <MatingPreference
+                emoji="🤮"
+                property="Nogo Types"
+                index="all"
+                childComponent={(
+                  <Grid item container spacing={1} direction="row">
+                    {
+                      pokemon.nogoTypes.map((type) => (
+                        <Grid item key={type}>
+                          <TypeChip typeName={type}/>
+                        </Grid>
+                      ))
+                    }
+                  </Grid>
+                )}
+              />
+            </Grid>
+          }
         </Grid>
       </CardContent>
     </Card>
   );
 }
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   nameTitle: {
     fontSize: "vi",
   },
@@ -126,5 +173,9 @@ const useStyles = makeStyles(() => ({
     marginRight: "auto",
     width: "100%",
     maxWidth: "300px",
-  }
+  },
+  emoji: {
+    fontSize: "30px",
+    marginRight: theme.spacing(2)
+  },
 }));
