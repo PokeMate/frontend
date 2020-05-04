@@ -3,35 +3,38 @@ import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 import Fab from "@material-ui/core/Fab";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import Zoom from "@material-ui/core/Zoom";
-import IconButton from "@material-ui/core/IconButton";
-import HomeIcon from "@material-ui/icons/Home";
-import { Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import {Button} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
+import withWidth from '@material-ui/core/withWidth';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
+    bottom: theme.spacing(1),
+    right: theme.spacing(1),
     flexGrow: 1,
   },
 
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(1),
   },
   title: {
     flexGrow: 1,
   },
+  icon: {
+    marginRight: theme.spacing(1),
+  }
 }));
 
 function ScrollTop(props) {
-  const { children, window } = props;
+  const {children, window} = props;
   const classes = useStyles();
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
@@ -48,7 +51,7 @@ function ScrollTop(props) {
     );
 
     if (anchor) {
-      anchor.scrollIntoView({ behavior: "smooth", block: "center" });
+      anchor.scrollIntoView({behavior: "ooth", block: "center"});
     }
   };
 
@@ -70,59 +73,79 @@ ScrollTop.propTypes = {
   window: PropTypes.func,
 };
 
-export default function Header(props) {
+function Header(props) {
   const classes = useStyles();
   const history = useHistory();
 
   return (
     <React.Fragment>
-      <CssBaseline />
+      <CssBaseline/>
       <AppBar>
         <Toolbar>
-          <IconButton
+          <Button
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
             onClick={() => history.push("/")}
           >
-            <HomeIcon />
-          </IconButton>
+            <span role="img" aria-label="home" className={classes.icon}>
+              🏠
+            </span>
+          </Button>
           <Typography variant="h6" className={classes.title}>
-            PokéMate
+            {
+              props.width === 'xs' ? "" : "PokéMate"
+            }
+
           </Typography>
           <Button color="inherit" onClick={() => history.push("/pokedex")}>
-            <span role="img" aria-label="caterpillar">
+            <span role="img" aria-label="caterpillar" className={classes.icon}>
               🐛
             </span>
-            PokéDex
+            {
+              props.width === 'xs' ? "" : "Pokédex"
+            }
+
           </Button>
           <Button color="inherit" onClick={() => history.push("/mate")}>
-            <span role="img" aria-label="fire">
+            <span role="img" aria-label="fire" className={classes.icon}>
               🔥
             </span>
-            Mate
+            {
+              props.width === 'xs' ? "" : "Mate"
+            }
           </Button>
           <Button color="inherit" onClick={() => history.push("/incubator")}>
             <span role="img" aria-label="egg">
               🥚
             </span>
-            Incubator
+            {
+              props.width === 'xs' ? "" : "Incubator"
+            }
           </Button>
           <Button color="inherit" onClick={() => history.push("/about")}>
-            <span role="img" aria-label="develper">
+            <span role="img" aria-label="developer" className={classes.icon}>
               👨‍💻
             </span>
-            About
+            {
+              props.width === 'xs' ? "" : "About"
+            }
           </Button>
         </Toolbar>
       </AppBar>
-      <Toolbar id="back-to-top-anchor" />
+      <Toolbar id="back-to-top-anchor"/>
       <ScrollTop {...props}>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUpIcon />
+        <Fab color="secondary" size="all" aria-label="scroll back to top">
+          <KeyboardArrowUpIcon/>
         </Fab>
       </ScrollTop>
     </React.Fragment>
   );
 }
+
+Header.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
+export default withWidth()(Header);
