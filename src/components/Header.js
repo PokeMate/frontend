@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     marginRight: theme.spacing(1),
+    fontSize: "30px"
   }
 }));
 
@@ -51,7 +52,7 @@ function ScrollTop(props) {
     );
 
     if (anchor) {
-      anchor.scrollIntoView({behavior: "ooth", block: "center"});
+      anchor.scrollIntoView({behavior: "smooth", block: "center"});
     }
   };
 
@@ -117,7 +118,7 @@ function Header(props) {
             }
           </Button>
           <Button color="inherit" onClick={() => history.push("/incubator")}>
-            <span role="img" aria-label="egg">
+            <span role="img" aria-label="egg" className={classes.icon}>
               🥚
             </span>
             {

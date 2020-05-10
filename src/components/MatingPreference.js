@@ -26,6 +26,7 @@ export default function MatingPreference({
 
   return (
     <div>
+      <Divider/>
       <Grid item container justify="center"
             alignItems="center" className={classes.paper}
       >
@@ -45,7 +46,6 @@ export default function MatingPreference({
           {childComponent}
         </Grid>
       </Grid>
-      <Divider/>
     </div>
   );
 }

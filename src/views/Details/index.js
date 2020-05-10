@@ -47,14 +47,11 @@ export default function PokemonDetails() {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({"name": name * 100, "image": image * 100, "rating": rating * 100})
     };
-    const response = await fetch(BASE_URL + "/rating/" + id, requestOptions);
-    const data = await response.json();
+    await fetch(BASE_URL + "/rating/" + id, requestOptions);
 
     const responseRating = await fetch(BASE_URL + "/rating/" + id);
     const dataRating = await responseRating.json();
     setRating(dataRating);
-
-    console.log(data)
   }
 
   useEffect(() => {
@@ -65,7 +62,7 @@ export default function PokemonDetails() {
       const data = await response.json();
       setPokemon(data[0]);
       if (!didCancel) {
-        console.log(data);
+        // console.log(data);
       }
 
       const responseRating = await fetch(BASE_URL + "/rating/" + id);
@@ -83,10 +80,11 @@ export default function PokemonDetails() {
     return () => {
       console.log("pokedex component unmounted...");
     };
-  }, [id]);
+  }, [id, rating]);
 
   const handleNavigation = (pokedexId) => {
     history.push("/pokedex/" + pokedexId.toString());
+
   };
 
 
@@ -186,5 +184,6 @@ const useStyles = makeStyles((theme) => ({
   emoji: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    fontSize: "30px"
   }
 }));

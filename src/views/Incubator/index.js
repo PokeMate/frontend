@@ -28,8 +28,6 @@ export default function Incubator() {
       const data = await response.json();
       setDates(data);
 
-      console.log(data)
-
       setIsLoading(false);
       if (!didCancel) {
         console.log(data);

@@ -1,7 +1,7 @@
 import React from "react";
 import TypeChip from "./TypeChip";
 import ProgressProperty from "./ProgressProperty";
-import {Grid, Typography, CardContent, Card, Divider} from "@material-ui/core";
+import {Grid, Typography, CardContent, Card} from "@material-ui/core";
 import {toPokedexId} from "../services/utils";
 import {makeStyles} from "@material-ui/core/styles";
 import MatingPreference from "./MatingPreference";
@@ -84,7 +84,6 @@ export default function DetailsCard({pokemon}) {
               </Grid>
             </Grid>
             <br/>
-            <Divider/>
           </Grid>
 
           {/* Fetishes */}
