@@ -41,7 +41,6 @@ export default function PokemonCard({pokemon}) {
   const history = useHistory();
 
   const handleClick = (pokemon) => {
-    console.log(pokemon.name);
     history.push("/pokedex/" + pokemon.pokeDexId);
   };
 

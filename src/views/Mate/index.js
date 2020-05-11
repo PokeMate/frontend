@@ -13,7 +13,6 @@ export default function Mate() {
   const history = useHistory();
 
   const postDate = async () => {
-    console.log(selection)
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -128,5 +127,6 @@ const useStyles = makeStyles((theme) => ({
   emoji: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
+    fontSize: "30px"
   }
 }));

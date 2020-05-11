@@ -30,9 +30,7 @@ export default function Pokedex() {
       var params = {
         generations: selectedGenerations, types: selectedTypes.map((t) => capitalize(t.name))
       }
-      console.log(params)
       url.search = new URLSearchParams(params).toString();
-
 
       const response = await fetch(url);
       const data = await response.json();

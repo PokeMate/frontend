@@ -14,10 +14,17 @@ const Rating = ({generalRating, postRating}) => {
   const [imageRating, setImageRating] = useState(0)
   const [combinationRating, setCombinationRating] = useState(0)
 
+  const handlePostRating = () => {
+    postRating(nameRating, imageRating, combinationRating)
+    setNameRating(0)
+    setImageRating(0)
+    setCombinationRating(0)
+  }
+
   const classes = useStyles();
   return (
     <Card>
-      <CardHeader title="Rating"></CardHeader>
+      <CardHeader title="Rating"/>
       <CardContent>
         <div>
           <Grid item container>
@@ -82,7 +89,7 @@ const Rating = ({generalRating, postRating}) => {
               <br/>
 
               <Button variant="contained" color="primary"
-                      onClick={() => postRating(nameRating, imageRating, combinationRating)}>Post Rating</Button>
+                      onClick={handlePostRating}>Post Rating</Button>
             </Grid>
 
           </Grid>
