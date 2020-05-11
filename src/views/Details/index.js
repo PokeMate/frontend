@@ -80,7 +80,7 @@ export default function PokemonDetails() {
     return () => {
       console.log("pokedex component unmounted...");
     };
-  }, [id, rating]);
+  }, [id]);
 
   const handleNavigation = (pokedexId) => {
     history.push("/pokedex/" + pokedexId.toString());
